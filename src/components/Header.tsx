@@ -15,7 +15,7 @@ export default function Header() {
           <div className='flex items-center gap-4'>
             <DarkModeSwitch />
             <Link href={'/'} className='flex gap-1 items-center'>
-                <div className='font-bold bg-blue-500 rounded-lg flex'>
+                <div className='font-bold bg-amber-500 rounded-lg flex'>
                     <span className='ml-1 text-green-600 font-bold text-3xl italic transform -skew-x-10 inline-block drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]'>
                         M
                     </span>

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Loading from '@/components/Loading';
+import Card from '@/components/Card';
 
 interface MediaItem {
   id: number;
@@ -77,30 +78,20 @@ export default function Home() {
       <div className="mb-4">
         <button
           onClick={() => setMediaType('movie')}
-          className={`mr-2 px-4 py-2 rounded ${mediaType === 'movie' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+          className={`mr-2 px-4 py-2 rounded ${mediaType === 'movie' ? 'bg-amber-600 text-white' : 'bg-gray-400 text-black'}`}
         >
           Movies
         </button>
         <button
           onClick={() => setMediaType('tv')}
-          className={`px-4 py-2 rounded ${mediaType === 'tv' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+          className={`px-4 py-2 rounded ${mediaType === 'tv' ? 'bg-amber-600 text-white' : 'bg-gray-400 text-black'}`}
         >
           TV Shows
         </button>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {mediaItems.map((item) => (
-          <div key={item.id} className="border rounded-lg overflow-hidden shadow-lg">
-            <img
-              src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-              alt={item.title || item.name}
-              className="w-full h-64 object-cover"
-            />
-            <div className="p-4">
-              <h2 className="font-bold text-xl mb-2">{item.title || item.name}</h2>
-              <p className="text-gray-700 text-base">{item.overview.slice(0, 100)}...</p>
-            </div>
-          </div>
+          <Card key={item.id} result={item} />
         ))}
       </div>
     </div>
