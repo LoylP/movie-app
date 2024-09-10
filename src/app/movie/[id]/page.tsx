@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import Loading from '@/components/Loading';
+import { FaPlay } from "react-icons/fa6";
 
 const ACCESS_TOKEN = process.env.NEXT_PUBLIC_API_TOKEN;
 
@@ -79,8 +80,8 @@ export default function MoviePage() {
 
   return (
     <div className='w-full'>
-      <div className='p-4 md:pt-8 flex flex-col md:flex-row items-center content-center max-w-6xl mx-auto md:space-x-6'>
-        <div className='relative w-full md:w-1/2 aspect-[2/3]'>
+      <div className='p-4 md:pt-8 flex flex-col md:flex-row max-w-6xl md:space-x-6'>
+        <div className='relative w-full md:w-1/3 aspect-[2/3]'>
           <Image
             src={`https://image.tmdb.org/t/p/original${movie.poster_path || movie.backdrop_path}`}
             alt={movie.title || movie.name || ""}
@@ -89,9 +90,19 @@ export default function MoviePage() {
             className='rounded-lg'
           />
         </div>
-        <div className='p-2 md:w-1/2'>
-          <h2 className='text-2xl mb-3 font-bold'>{movie.title || movie.name}</h2>
-          <p className='text-lg mb-3'>{movie.overview}</p>
+        <div className='p-3 md:w-2/3'>
+          <h1 className='text-6xl mb-10 font-bold subpixel-antialiased text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-red-600 drop-shadow-lg'>
+            {movie.title || movie.name}
+          </h1>
+          <p className='text-xl mb-5'>{movie.overview}</p>
+          <div className='flex mb-5'>
+            <button className='flex items-center justify-center gap-2 text-2xl bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl'>
+                Play now <FaPlay className="text-xl" /> 
+            </button>
+            <h1 className='text-4xl font-bold my-auto mx-2 hover:text-green-600'>
+            Trailer
+            </h1>
+          </div>
           <p className='mb-3'>
             <span className='font-semibold mr-1'>Date Released:</span>
             {movie.release_date || movie.first_air_date}
