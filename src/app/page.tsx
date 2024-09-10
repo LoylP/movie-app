@@ -50,16 +50,23 @@ export default function Home() {
       } catch (error) {
         console.error('Error fetching media:', error);
       } finally {
-        setLoading(false);
-        setInitialLoad(false);
+       
+        setTimeout(() => {
+          setLoading(false);
+          setInitialLoad(false);
+        }, 500); 
       }
     };
 
     fetchMedia();
   }, [mediaType, genre]);
 
-  if (initialLoad) {
-    return <Loading />;
+  if (initialLoad || loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loading />
+      </div>
+    );
   }
 
   return (
@@ -82,23 +89,19 @@ export default function Home() {
         </button>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {loading ? (
-          <Loading />
-        ) : (
-          mediaItems.map((item) => (
-            <div key={item.id} className="border rounded-lg overflow-hidden shadow-lg">
-              <img
-                src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                alt={item.title || item.name}
-                className="w-full h-64 object-cover"
-              />
-              <div className="p-4">
-                <h2 className="font-bold text-xl mb-2">{item.title || item.name}</h2>
-                <p className="text-gray-700 text-base">{item.overview.slice(0, 100)}...</p>
-              </div>
+        {mediaItems.map((item) => (
+          <div key={item.id} className="border rounded-lg overflow-hidden shadow-lg">
+            <img
+              src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+              alt={item.title || item.name}
+              className="w-full h-64 object-cover"
+            />
+            <div className="p-4">
+              <h2 className="font-bold text-xl mb-2">{item.title || item.name}</h2>
+              <p className="text-gray-700 text-base">{item.overview.slice(0, 100)}...</p>
             </div>
-          ))
-        )}
+          </div>
+        ))}
       </div>
     </div>
   );

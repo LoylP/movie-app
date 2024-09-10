@@ -5,7 +5,7 @@ import loading from 'public/loading.gif'
 const Loading = () => {
   return (
     <>
-      <Image className='w-[200px] m-auto block' src={loading} alt='loading..' width={200} height={200} />
+      <Image className='w-[200px] m-auto block item-center' src={loading} alt='loading..' width={200} height={200} />
     </>
   );
 };
