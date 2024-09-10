@@ -78,13 +78,13 @@ export default function Home() {
       <div className="mb-4">
         <button
           onClick={() => setMediaType('movie')}
-          className={`mr-2 px-4 py-2 rounded ${mediaType === 'movie' ? 'bg-amber-600 text-white' : 'bg-gray-400 text-black'}`}
+          className={`mr-2 px-4 py-2 rounded ${mediaType === 'movie' ? 'bg-amber-600 text-white' : 'bg-gray-400 text-black'} hover:bg-green-500 transition-colors duration-200`}
         >
           Movies
         </button>
         <button
           onClick={() => setMediaType('tv')}
-          className={`px-4 py-2 rounded ${mediaType === 'tv' ? 'bg-amber-600 text-white' : 'bg-gray-400 text-black'}`}
+          className={`px-4 py-2 rounded ${mediaType === 'tv' ? 'bg-amber-600 text-white' : 'bg-gray-400 text-black'} hover:bg-green-500 transition-colors duration-200`}
         >
           TV Shows
         </button>
