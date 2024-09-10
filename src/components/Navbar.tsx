@@ -18,26 +18,30 @@ export default function Navbar() {
   };
 
   return (
-    <div className='flex dark:bg-slate-800 p-4 lg:bg-amber-500 justify-center gap-10'>
-        <form onSubmit={handleSubmit} className='mr-auto flex justify-left p-1 bg-gray-300 border rounded-lg'>
-            <input
-                className='ml-2 bg-transparent text-black focus:outline-none'
-                type='text'
-                placeholder='Search movie'
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button type="submit" className='text-black'>
-                <BsSearch size={20} />
-            </button>
-        </form>
-        <NavbarItems title='Trending' param='trending' />
-        <NavbarItems title='Movies' param='movie' />
-        <NavbarItems title='TV Shows' param='tv' />
-        <div className='flex text-2xl ml-auto'>
-            <IoIosNotificationsOutline className='mx-2'/>
-            <RxAvatar className='mr-5'/>
+    <div className='flex dark:bg-slate-800 p-4 lg:bg-amber-500 items-center'>
+        <div className='flex-1'>
+            <form onSubmit={handleSubmit} className='inline-flex justify-left p-1 bg-gray-300 border rounded-lg ml-4'>
+                <input
+                    className='ml-2 bg-transparent text-black focus:outline-none'
+                    type='text'
+                    placeholder='Search movie'
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <button type="submit" className='text-black'>
+                    <BsSearch size={20} />
+                </button>
+            </form>
         </div>
-      </div>
+        <div className='flex-1 flex justify-center gap-10'>
+            <NavbarItems title='Trending' param='trending' />
+            <NavbarItems title='Movies' param='movie' />
+            <NavbarItems title='TV Shows' param='tv' />
+        </div>
+        <div className='flex-1 flex justify-end text-2xl mr-4'>
+            <IoIosNotificationsOutline className='mx-2'/>
+            <RxAvatar className='ml-2'/>
+        </div>
+    </div>
   );
 }
