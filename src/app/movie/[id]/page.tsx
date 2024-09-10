@@ -79,9 +79,22 @@ export default function MoviePage() {
   }
 
   return (
-    <div className='w-full'>
-      <div className='p-4 md:pt-8 flex flex-col md:flex-row max-w-6xl md:space-x-6'>
-        <div className='relative w-full md:w-1/3 aspect-[2/3]'>
+    <div className='relative w-full min-h-screen'>
+      {/* Background Image */}
+      <div className='absolute inset-0 z-0'>
+        <Image
+          src={`https://image.tmdb.org/t/p/original${movie.backdrop_path || movie.poster_path}`}
+          alt={movie.title || movie.name || ""}
+          layout="fill"
+          objectFit="cover"
+          className='opacity-30'
+        />
+        <div className='absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent'></div>
+      </div>
+
+      {/* Content */}
+      <div className='relative z-10 p-4 md:pt-8 flex flex-col md:flex-row max-w-6xl mx-auto md:space-x-6'>
+        <div className='relative w-full md:w-1/3 aspect-[2/3] shadow-2xl'>
           <Image
             src={`https://image.tmdb.org/t/p/original${movie.poster_path || movie.backdrop_path}`}
             alt={movie.title || movie.name || ""}
@@ -99,9 +112,9 @@ export default function MoviePage() {
             <button className='flex items-center justify-center gap-2 text-2xl bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl'>
                 Play now <FaPlay className="text-xl" /> 
             </button>
-            <h1 className='text-4xl font-bold my-auto mx-2 hover:text-green-600'>
-            Trailer
-            </h1>
+            <button className='mx-5 flex items-center justify-center gap-2 text-2xl hover:bg-blue-500 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 border-2 border-white'>
+                Trailer
+            </button>
           </div>
           <p className='mb-3'>
             <span className='font-semibold mr-1'>Date Released:</span>
