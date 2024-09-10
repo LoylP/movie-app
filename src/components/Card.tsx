@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FaRegImage, FaPlay } from "react-icons/fa";
+import { useRouter } from 'next/navigation';
 
 interface CardProps {
   result: {
@@ -14,11 +15,17 @@ interface CardProps {
 }
 
 export default function Card({ result }: CardProps) {
+  const router = useRouter();
   const imagePath = result.backdrop_path || result.poster_path;
   
+  const handleClick = () => {
+    localStorage.setItem('movieData', JSON.stringify(result));
+    router.push(`/movie/${result.id}`);
+  };
+
   return (
     <div className="relative border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-125 transform z-10 hover:z-50 group">
-      <Link href={`/movie/${result.id}`}>
+      <div onClick={handleClick} className="cursor-pointer">
         <div className="relative w-full pb-[70%]"> 
           {imagePath ? (
             <>
@@ -44,8 +51,7 @@ export default function Card({ result }: CardProps) {
             </div>
           )}
         </div>
-      </Link>
-      
+      </div>
     </div>
   );
 }

@@ -13,27 +13,28 @@ interface MediaItem {
   poster_path: string;
 }
 
-const ACCESS_TOKEN = process.env.NEXT_PUBLIC_API_TOKEN
+const ACCESS_TOKEN = process.env.NEXT_PUBLIC_API_TOKEN;
 
 export default function Home() {
   const [mediaItems, setMediaItems] = useState<MediaItem[]>([]);
-  const [mediaType, setMediaType] = useState<'movie' | 'tv'>('movie');
+  const [loading, setLoading] = useState<boolean>(true);
   const searchParams = useSearchParams();
-  const genre = searchParams.get('genre');
-  const [loading, setLoading] = useState<boolean>(false);
-  const [initialLoad, setInitialLoad] = useState(true);
+  const genre = searchParams.get('genre') || 'movie';
 
   useEffect(() => {
     const fetchMedia = async () => {
       setLoading(true);
       try {
         let url = '';
-        if (genre === 'fetchTrending') {
-          url = `https://api.themoviedb.org/3/trending/${mediaType}/day?language=en-US`;
-        } else {
-          url = mediaType === 'movie'
-            ? 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc'
-            : 'https://api.themoviedb.org/3/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc';
+        switch(genre) {
+          case 'tv':
+            url = 'https://api.themoviedb.org/3/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc';
+            break;
+          case 'trending':
+            url = 'https://api.themoviedb.org/3/trending/all/day?language=en-US';
+            break;
+          default:
+            url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc';
         }
 
         const response = await fetch(url, {
@@ -47,22 +48,17 @@ export default function Home() {
         }
         const data = await response.json();
         setMediaItems(data.results);
-        
       } catch (error) {
         console.error('Error fetching media:', error);
       } finally {
-       
-        setTimeout(() => {
-          setLoading(false);
-          setInitialLoad(false);
-        }, 500); 
+        setLoading(false);
       }
     };
 
     fetchMedia();
-  }, [mediaType, genre]);
+  }, [genre]);
 
-  if (initialLoad || loading) {
+  if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Loading />
@@ -73,22 +69,8 @@ export default function Home() {
   return (
     <div className="container mx-auto px-4">
       <h1 className="text-3xl font-bold my-4">
-        {genre === 'fetchTrending' ? 'Trending' : 'Popular'} {mediaType === 'movie' ? 'Movies' : 'TV Shows'}
+        {genre === 'trending' ? 'Trending' : genre === 'tv' ? 'Popular TV Shows' : 'Popular Movies'}
       </h1>
-      <div className="mb-4">
-        <button
-          onClick={() => setMediaType('movie')}
-          className={`mr-2 px-4 py-2 rounded ${mediaType === 'movie' ? 'bg-amber-600 text-white' : 'bg-gray-400 text-black'} hover:bg-green-500 transition-colors duration-200`}
-        >
-          Movies
-        </button>
-        <button
-          onClick={() => setMediaType('tv')}
-          className={`px-4 py-2 rounded ${mediaType === 'tv' ? 'bg-amber-600 text-white' : 'bg-gray-400 text-black'} hover:bg-green-500 transition-colors duration-200`}
-        >
-          TV Shows
-        </button>
-      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {mediaItems.map((item) => (
           <Card key={item.id} result={item} />
