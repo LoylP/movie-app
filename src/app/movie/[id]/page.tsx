@@ -79,15 +79,16 @@ export default function MoviePage() {
   }
 
   return (
-    <div className='relative w-full min-h-screen'>
+    <div className='relative w-full min-h-screen text-black dark:text-gray-200'>
       {/* Background Image */}
       <div className='absolute inset-0 z-0'>
+        <div className='absolute inset-0 bg-black opacity-40'></div>
         <Image
           src={`https://image.tmdb.org/t/p/original${movie.backdrop_path || movie.poster_path}`}
           alt={movie.title || movie.name || ""}
           layout="fill"
           objectFit="cover"
-          className='opacity-30'
+          className='opacity-60'
         />
         <div className='absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent'></div>
       </div>
