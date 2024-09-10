@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import Loading from '@/components/Loading';
@@ -28,22 +28,7 @@ export default function MoviePage() {
   const [movie, setMovie] = useState<MovieDetails | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const storedData = localStorage.getItem('movieData');
-    if (storedData) {
-      setMovie(JSON.parse(storedData));
-      setLoading(false);
-    } else {
-      fetchMovieDetails();
-    }
-
-    // Cleanup
-    return () => {
-      localStorage.removeItem('movieData');
-    };
-  }, [id]);
-
-  const fetchMovieDetails = async () => {
+  const fetchMovieDetails = useCallback(async () => {
     try {
       const response = await fetch(
         `https://api.themoviedb.org/3/movie/${id}?language=en-US`,
@@ -59,12 +44,28 @@ export default function MoviePage() {
       }
       const data = await response.json();
       setMovie(data);
+      localStorage.setItem('movieData', JSON.stringify(data));
     } catch (error) {
       console.error('Error fetching movie details:', error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('movieData');
+    if (storedData) {
+      setMovie(JSON.parse(storedData));
+      setLoading(false);
+    } else {
+      fetchMovieDetails();
+    }
+
+    // Cleanup
+    return () => {
+      localStorage.removeItem('movieData');
+    };
+  }, [fetchMovieDetails]);
 
   if (loading) {
     return (

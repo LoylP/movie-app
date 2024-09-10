@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Card from '@/components/Card';
 import Loading from '@/components/Loading';
@@ -20,13 +20,8 @@ export default function SearchPage() {
   const [results, setResults] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (query) {
-      fetchSearchResults();
-    }
-  }, [query]);
-
-  const fetchSearchResults = async () => {
+  const fetchSearchResults = useCallback(async () => {
+    if (!query) return;
     setLoading(true);
     try {
       const response = await fetch(
@@ -48,7 +43,11 @@ export default function SearchPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [query]); // Thêm query vào danh sách phụ thuộc
+
+  useEffect(() => {
+    fetchSearchResults();
+  }, [fetchSearchResults]); // Sử dụng fetchSearchResults như phụ thuộc
 
   if (loading) {
     return (
@@ -60,13 +59,15 @@ export default function SearchPage() {
 
   return (
     <div className="max-w-6xl mx-auto mt-8 px-4">
-      <h1 className="text-2xl font-bold mb-4">Search Results for "{query}"</h1>
+      <h1 className="text-2xl font-bold mb-4">Search Results for &ldquo;{query}&rdquo;</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {results.map((movie) => (
           <Card key={movie.id} result={movie} />
         ))}
       </div>
-      {results.length === 0 && <p>No results found.</p>}
+      <p className="text-sm text-gray-500">
+        No results found for &ldquo;{query}&rdquo;
+      </p>
     </div>
   );
 }

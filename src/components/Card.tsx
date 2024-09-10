@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { FaRegImage, FaPlay } from "react-icons/fa";
 import { useRouter } from 'next/navigation';
 

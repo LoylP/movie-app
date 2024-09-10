@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 export default function Page() {
   return (
     <div className="max-w-6xl text-lg mx-auto space-y-4 p-8">
@@ -31,7 +29,7 @@ export default function Page() {
         <li>Latest news and updates from the world of cinema</li>
       </ul>
       <p>
-        Whether you're a casual viewer or a die-hard cinephile, MFilm is here to enhance your movie-watching experience. Dive in and explore the wonderful world of cinema with us!
+        Whether you are a casual viewer or a die-hard cinephile, MFilm is here to enhance your movie-watching experience. Dive in and explore the wonderful world of cinema with us!
       </p>
     </div>
   );
