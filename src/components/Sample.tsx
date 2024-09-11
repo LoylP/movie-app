@@ -74,7 +74,7 @@ function MovieRow({ movies, title }: { movies: MovieItem[], title: string }) {
       <h2 className="text-2xl font-bold my-4">{title}</h2>
       <div className="relative">
         <button
-          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -left-12"
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -left-16"
           onClick={() => scroll('left')}
         >
           <FaChevronLeft />
@@ -93,7 +93,7 @@ function MovieRow({ movies, title }: { movies: MovieItem[], title: string }) {
           </div>
         </div>
         <button
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -right-12"
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -right-16"
           onClick={() => scroll('right')}
         >
           <FaChevronRight />
