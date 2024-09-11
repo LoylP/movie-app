@@ -1,7 +1,8 @@
 'use client';
-
+// Import necessary modules
 import React, { useEffect, useState, useCallback } from 'react';
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
 import Loading from '@/components/Loading';
 import { FaPlay } from "react-icons/fa6";
 
@@ -22,14 +23,15 @@ interface MovieDetails {
   number_of_seasons?: number;
 }
 
-export default function MoviePage({ params }: { params: { id: string } }) {
+export default function MoviePage() {
+  const { id } = useParams();
   const [movie, setMovie] = useState<MovieDetails | null>(null);
   const [loading, setLoading] = useState(true);
 
   const fetchMovieDetails = useCallback(async () => {
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${params.id}?language=en-US`,
+        `https://api.themoviedb.org/3/movie/${id}?language=en-US`,
         {
           headers: {
             'Authorization': `Bearer ${ACCESS_TOKEN}`,
@@ -48,7 +50,7 @@ export default function MoviePage({ params }: { params: { id: string } }) {
     } finally {
       setLoading(false);
     }
-  }, [params.id]);
+  }, [id]);
 
   useEffect(() => {
     const storedData = localStorage.getItem('movieData');
