@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import Loading from "@/components/Loading";
 import { FaPlay } from "react-icons/fa6";
+import sampleData from "public/data.json"
 
 const ACCESS_TOKEN = process.env.NEXT_PUBLIC_API_TOKEN;
 
@@ -30,21 +31,27 @@ export default function MoviePage() {
 
   const fetchMovieDetails = useCallback(async () => {
     try {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${id}?language=en-US`,
-        {
-          headers: {
-            Authorization: `Bearer ${ACCESS_TOKEN}`,
-            accept: "application/json",
-          },
+      // First, check if the movie is in sampleData
+      const sampleMovie = sampleData.results.find(m => m.id.toString() === id);
+      if (sampleMovie) {
+        setMovie(sampleMovie as MovieDetails);
+      } else {
+        // If not in sampleData, fetch from API
+        const response = await fetch(
+          `https://api.themoviedb.org/3/movie/${id}?language=en-US`,
+          {
+            headers: {
+              Authorization: `Bearer ${ACCESS_TOKEN}`,
+              accept: "application/json",
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
         }
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+        const data = await response.json();
+        setMovie(data);
       }
-      const data = await response.json();
-      setMovie(data);
-      localStorage.setItem("movieData", JSON.stringify(data));
     } catch (error) {
       console.error("Error fetching movie details:", error);
     } finally {

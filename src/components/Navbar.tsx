@@ -34,9 +34,11 @@ export default function Navbar() {
             </form>
         </div>
         <div className='flex-1 flex justify-center gap-10'>
+            <NavbarItems title='My list' param='mylist' />
             <NavbarItems title='Trending' param='trending' />
             <NavbarItems title='Movies' param='movie' />
             <NavbarItems title='TV Shows' param='tv' />
+  
         </div>
         <div className='flex-1 flex justify-end text-2xl mr-4'>
             <IoIosNotificationsOutline className='mx-2'/>
