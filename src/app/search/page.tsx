@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import Card from '@/components/Card';
 import Loading from '@/components/Loading';
 
-const ACCESS_TOKEN = process.env.NEXT_PUBLIC_API_TOKEN;
+const ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkZGZlZWMzMzNkZTkzMzM4MDgzZDE5ZjZiYzEzMjlkZiIsIm5iZiI6MTcyNjAzNjcyOS40NTQ1NzcsInN1YiI6IjY2ZGZlYTM4N2IxNDJlNDJmOTI4ZGM4NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.jjqpzQohpdJ6ltPgNjWkG0of8ySoCFQAL8UnxhnNwUg"
 
 interface Movie {
   id: number;
