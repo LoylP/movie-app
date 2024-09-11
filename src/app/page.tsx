@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import Loading from '@/components/Loading';
 import Card from '@/components/Card';
 
+
 interface MediaItem {
   id: number;
   title?: string;
