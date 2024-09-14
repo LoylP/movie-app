@@ -5,9 +5,10 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import Loading from "@/components/Loading";
 import { FaPlay } from "react-icons/fa6";
-import sampleData from "public/data.json"
+import sampleData from "public/data.json";
 
-const ACCESS_TOKEN = process.env.NEXT_PUBLIC_API_TOKEN;
+// const ACCESS_TOKEN = process.env.NEXT_PUBLIC_API_TOKEN;
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 interface MovieDetails {
   id: number;
@@ -32,19 +33,21 @@ export default function MoviePage() {
   const fetchMovieDetails = useCallback(async () => {
     try {
       // First, check if the movie is in sampleData
-      const sampleMovie = sampleData.results.find(m => m.id.toString() === id);
+      const sampleMovie = sampleData.results.find(
+        (m) => m.id.toString() === id
+      );
       if (sampleMovie) {
         setMovie(sampleMovie as MovieDetails);
       } else {
         // If not in sampleData, fetch from API
         const response = await fetch(
-          `https://api.themoviedb.org/3/movie/${id}?language=en-US`,
-          {
-            headers: {
-              Authorization: `Bearer ${ACCESS_TOKEN}`,
-              accept: "application/json",
-            },
-          }
+          `https://api.themoviedb.org/3/movie/${id}?language=en-US?api_key=${API_KEY}`
+          // {
+          //   headers: {
+          //     Authorization: `Bearer ${ACCESS_TOKEN}`,
+          //     accept: "application/json",
+          //   },
+          // }
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
