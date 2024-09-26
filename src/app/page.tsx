@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Loading from "@/components/Loading";
 import Card from "@/components/Card";
 import Sample from "@/components/Sample";
+import Billboard from "@/components/Billboard";
 
 interface MediaItem {
   id: number;
@@ -78,30 +79,35 @@ export default function Home() {
   }
 
   return (
-    <div className="container mx-auto px-4">
-      {error ? (
-        <div>
-          <h1 className="text-sm font-bold my-4 text-red-500">
-            Error fetching API (Picture below for illustration purposes only!)
-          </h1>
-          <Sample />
-        </div>
-      ) : (
-        <div>
-          <h1 className="text-3xl font-bold my-4">
-            {genre === "trending"
-              ? "Trending"
-              : genre === "tv"
-                ? "TV Shows"
-                : "Movies"}
-          </h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {mediaItems.map((item) => (
-              <Card key={item.id} result={item} />
-            ))}
-          </div>
-        </div>
-      )}
+    // <div className="container mx-auto px-4">
+    //   {error ? (
+    //     <div>
+    //       <h1>hello</h1>
+    //       <h1 className="text-sm font-bold my-4 text-red-500">
+    //         Error fetching API (Picture below for illustration purposes only!)
+    //       </h1>
+    //       <Sample />
+    //     </div>
+    //   ) : (
+    //     <div>
+    //       <h1 className="text-3xl font-bold my-4">
+    //         {genre === "trending"
+    //           ? "Trending"
+    //           : genre === "tv"
+    //             ? "TV Shows"
+    //             : "Movies"}
+    //       </h1>
+    //       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    //         {mediaItems.map((item) => (
+    //           <Card key={item.id} result={item} />
+    //         ))}
+    //       </div>
+    //     </div>
+    //   )}
+    // </div>
+    <div>
+      <Billboard />
+      <Sample />
     </div>
   );
 }

@@ -1,6 +1,11 @@
 export default function Page() {
   return (
     <div className="max-w-6xl text-lg mx-auto space-y-4 p-8">
+      <div className="w-[20%] h-[20%]">
+        <h1 className="dark:text-zinc-900 text-zinc-900 font-bold mb-4 lg:text-white">
+          .
+        </h1>
+      </div>
     <div className="flex text-4xl font-medium my-auto">
         <h1 className="text-amber-600">About </h1>
         <div className='flex my-auto'>

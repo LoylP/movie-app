@@ -45,11 +45,11 @@ export default function SearchPage() {
     } finally {
       setLoading(false);
     }
-  }, [query]); // Thêm query vào danh sách phụ thuộc
+  }, [query]); 
 
   useEffect(() => {
     fetchSearchResults();
-  }, [fetchSearchResults]); // Sử dụng fetchSearchResults như phụ thuộc
+  }, [fetchSearchResults]); 
 
   if (loading) {
     return (
@@ -60,11 +60,16 @@ export default function SearchPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto mt-8 px-4">
-      <h1 className="text-2xl font-bold mb-4">
+    <div className="max-w-7xl mx-auto px-4">
+      <div className="w-[20%] h-[20%]">
+        <h1 className="dark:text-zinc-900 text-zinc-900 font-bold mb-4 lg:text-white">
+          .
+        </h1>
+      </div>
+      <h1 className="text-2xl mt-20 font-bold mb-4">
         Search Results for &ldquo;{query}&rdquo;
       </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 gap-y-16">
         {results.map((movie) => (
           <Card key={movie.id} result={movie} />
         ))}

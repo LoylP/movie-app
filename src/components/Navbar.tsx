@@ -18,7 +18,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className='flex dark:bg-slate-800 p-4 lg:bg-amber-500 items-center'>
+    <div className='w-full fixed z-40 flex p-4 items-center'>
         <div className='flex-1'>
             <form onSubmit={handleSubmit} className='inline-flex justify-left p-1 bg-gray-300 border rounded-lg ml-4'>
                 <input
