@@ -17,7 +17,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 
 ## Demo
-<div>You can check out the live demo of the application <a href="https://movie-qdovlavje-loylps-projects.vercel.app/?genre=mylist">here</a>.</div>
+<div>You can check out the live demo of the application <a href="https://movie-app-git-main-loylps-projects.vercel.app/?genre=home">here</a>.</div>
 
 ## Screenshots
 
