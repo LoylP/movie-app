@@ -67,7 +67,7 @@ const Billboard = () => {
                                     key={index}
                                     src={banner.thumbnail} 
                                     alt={`Thumbnail ${index}`} 
-                                    className={`transition-transform duration-300 ease-in-out ${isSelected ? 'w-40 h-44 scale-110' : isAdjacent ? 'w-36 h-36 scale-90 opacity-50' : 'hidden'} object-cover rounded-md cursor-pointer`} 
+                                    className={`transition-transform duration-500 ease-in-out ${isSelected ? 'w-40 h-44 scale-110' : isAdjacent ? 'w-36 h-36 scale-90 opacity-50' : 'hidden'} object-cover rounded-md cursor-pointer`} 
                                     onClick={() => handleBannerChange(banner)} 
                                 />
                             );

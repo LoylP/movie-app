@@ -1,8 +1,6 @@
 "use client"
 import Link from 'next/link';
-import MenuItem from './MenuItem';
-import { AiFillHome } from 'react-icons/ai';
-import { BsFillInfoCircleFill, BsSearch } from 'react-icons/bs';
+import { BsSearch } from 'react-icons/bs';
 import DarkModeSwitch from './DarkModeSwitch';
 import NavbarItems from './NavbarItems';
 import { IoIosNotificationsOutline } from 'react-icons/io';
@@ -47,12 +45,12 @@ export default function Header() {
             </Link>
           </div>
           <div className='flex-1 flex justify-center gap-10 text-white'>
-            <MenuItem title='home' address='/' Icon={AiFillHome} />
+            <NavbarItems title='Home' param='home'/>
             <NavbarItems title='My list' param='mylist' />
-            <NavbarItems title='Trending' param='trending' />
+            <NavbarItems title='New & Popular' param='new-popular' />
             <NavbarItems title='Movies' param='movie' />
-            <NavbarItems title='TV Shows' param='tv' />
-            <MenuItem title='about' address='/about' Icon={BsFillInfoCircleFill} />
+            <NavbarItems title='Anime' param='anime' />
+            <NavbarItems title='About' param='about' />
           
           </div>
           <div className='flex items-center gap-4 mr-5 text-white'>
