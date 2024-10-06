@@ -92,6 +92,11 @@ export default function MoviePage() {
   return (
     <div className="relative w-full min-h-screen text-black dark:text-gray-200">
       {/* Background Image */}
+      <div className="w-[20%] h-[20%]">
+        <h1 className="dark:text-zinc-900 text-zinc-900 font-bold mb-4 lg:text-white">
+          .
+        </h1>
+      </div>
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <Image

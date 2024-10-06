@@ -27,18 +27,12 @@ export default function SearchPage() {
     try {
       const response = await fetch(
         `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query!)}&include_adult=false&language=en-US&page=1&api_key=${API_KEY}`
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${ACCESS_TOKEN}`,
-        //     accept: "application/json",
-        //   },
-        // }
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      console.log(data);
+      console.log(data.results);
       setResults(data.results);
     } catch (error) {
       console.error("Error fetching search results:", error);
