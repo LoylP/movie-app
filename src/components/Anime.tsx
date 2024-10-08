@@ -14,10 +14,10 @@ interface Props {
   title: string;
   vote_average: number;
   vote_count: number;
-  videoUrl?: string;
+  videoUrl: string;
 }
 
-const pathAPI = 'http://127.0.0.1:8000/videos/';
+const pathAPI = 'https://prisma-fastapi.onrender.com/videos/';
 
 const Anime = () => {
   const [currentBanner, setCurrentBanner] = useState(anime[0]);
@@ -33,7 +33,7 @@ const Anime = () => {
 
   return (
     <div className="relative h-[56.25vw]">
-      {currentBanner.videoUrl ? (
+      {currentBanner.videoUrl && (
         <video
           className="w-full h-[56.25vw] object-cover brightness-[90%]"
           autoPlay
@@ -41,13 +41,8 @@ const Anime = () => {
           loop
           poster={currentBanner?.backdrop_path}
           src={`${pathAPI}${currentBanner.videoUrl}`}
+          onError={() => console.error("Video failed to load")}
         ></video>
-      ) : (
-        <img
-          className="w-full h-[56.25vw] object-cover brightness-[90%]"
-          src={`https://image.tmdb.org/t/p/w1280${currentBanner.backdrop_path}`}
-          alt={currentBanner.title}
-        />
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
 

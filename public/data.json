@@ -68,7 +68,6 @@
       "vote_count": 6
     },
     {
-        "adult": false,
         "backdrop_path": "/cZmOrIOkJ2SNfVdiO85dUbOAYnL.jpg",
         "genre_ids": [16, 18],
         "kind": "Anime",
@@ -80,12 +79,10 @@
         "poster_path": "/ntRU0OA4etGGiMMmH1Yw0bnaMdW.jpg",
         "release_date": "2024-02-16",
         "title": "HAIKYU!! The Dumpster Battle",
-        "video": false,
         "vote_average": 7,
         "vote_count": 89
     },
     {
-        "adult": false,
         "backdrop_path": "/mhBhKUECLLzvbtXX6Bg8QTRodHV.jpg",
         "genre_ids": [16],
         "kind": "Anime",
@@ -97,12 +94,10 @@
         "poster_path": "/kilrCmrOOQqM4RFLnuOAlgUfRZC.jpg",
         "release_date": "2015-09-18",
         "title": "Haikyuu!! Movie 2: Winners and Losers",
-        "video": false,
         "vote_average": 8.138,
         "vote_count": 29
     },
     {
-        "adult": false,
         "backdrop_path": "/qRg9JDZDZJg2n1zXkYWJFnAmtAy.jpg",
         "genre_ids": [16, 18],
         "kind": "Anime",
@@ -114,12 +109,10 @@
         "poster_path": "/5HlpuETjDOob8yzddD1MF7QwZwV.jpg",
         "release_date": "2015-07-03",
         "title": "Haikyuu!! The Movie: The End and the Beginning",
-        "video": false,
         "vote_average": 8.625,
         "vote_count": 36
     },
     {
-        "adult": false,
         "backdrop_path": "/bCOdRdbvZ5LrAfKH2VVgduoUCQL.jpg",
         "genre_ids": [16, 18],
         "kind": "Anime",
@@ -131,12 +124,10 @@
         "poster_path": "/ewew32cuPfWjD8QKoHztkV8TS84.jpg",
         "release_date": "2017-09-29",
         "title": "Haikyuu!! Movie 4: Battle of Concepts",
-        "video": false,
         "vote_average": 8.164,
         "vote_count": 64
     },
     {
-        "adult": false,
         "backdrop_path": "/7DBdVT5KEhjnMLpoejbYylfzd92.jpg",
         "genre_ids": [16, 28, 80, 9648],
         "kind": "Anime",
@@ -148,12 +139,10 @@
         "poster_path": "/zfsLhI6yAHH9pdhY6EConmUCumX.jpg",
         "release_date": "2022-04-15",
         "title": "Detective Conan: The Bride of Halloween",
-        "video": false,
         "vote_average": 6.5,
         "vote_count": 83
     },
     {
-        "adult": false,
         "backdrop_path": "/h66wBX53oreHLaR7xQHpSaF5HhL.jpg",
         "genre_ids": [16, 28, 80, 9648, 10749, 53],
         "kind": "Anime",
@@ -165,7 +154,6 @@
         "poster_path": "/wowJzvF1KqEFSZoArkgngRy1r4L.jpg",
         "release_date": "2021-04-16",
         "title": "Detective Conan: The Scarlet Bullet",
-        "video": false,
         "vote_average": 6.5,
         "vote_count": 75
     },
@@ -180,7 +168,6 @@
       "vote_average": 7.728
     },
   {
-    "adult": false,
     "kind": "Marvel, Superhero",
     "backdrop_path": "/zD5v1E4joAzFvmAEytt7fM3ivyT.jpg",
     "genre_ids": [28, 12, 878],
@@ -192,12 +179,10 @@
     "poster_path": "/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
     "release_date": "2021-12-15",
     "title": "Spider-Man: No Way Home",
-    "video": false,
     "vote_average": 7.96,
     "vote_count": 19851
   },
   {
-    "adult": false,
     "kind": "Marvel, Superhero",
     "backdrop_path": "/kVd3a9YeLGkoeR50jGEXM6EqseS.jpg",
     "genre_ids": [16, 28, 12, 878],
@@ -209,12 +194,10 @@
     "poster_path": "/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
     "release_date": "2023-05-31",
     "title": "Spider-Man: Across the Spider-Verse",
-    "video": false,
     "vote_average": 8.355,
     "vote_count": 6749
   },
   {
-    "adult": false,
     "kind": "Marvel, Superhero",
     "backdrop_path": "/jsoz1HlxczSuTx0mDl2h0lxy36l.jpg",
     "genre_ids": [14, 28, 35],
@@ -226,12 +209,11 @@
     "poster_path": "/pIkRyD18kl4FhoCNQuWxWu5cBLM.jpg",
     "release_date": "2022-07-06",
     "title": "Thor: Love and Thunder",
-    "video": false,
     "vote_average": 6.447,
     "vote_count": 7408
   },
   {
-    "adult": false,
+    
     "kind": "Marvel, Superhero",
     "backdrop_path": "/xfBnQ4mgf1jYZsscJGJjr6ce0Ar.jpg",
     "genre_ids": [878, 28, 12],
@@ -243,12 +225,12 @@
     "poster_path": "/gKzYx79y0AQTL4UAk1cBQJ3nvrm.jpg",
     "release_date": "2008-06-12",
     "title": "The Incredible Hulk",
-    "video": false,
+    
     "vote_average": 6.211,
     "vote_count": 11601
   },
   {
-    "adult": false,
+    
     "kind": "Marvel, Superhero",
     "backdrop_path": "/cyecB7godJ6kNHGONFjUyVN9OX5.jpg",
     "genre_ids": [28, 878, 12],
@@ -260,12 +242,12 @@
     "poster_path": "/78lPtwv72eTNqFW9COBYI0dWDJa.jpg",
     "release_date": "2008-04-30",
     "title": "Iron Man",
-    "video": false,
+    
     "vote_average": 7.646,
     "vote_count": 26104
   },
   {
-    "adult": false,
+    
     "kind": "Marvel, Superhero",
     "backdrop_path": "/7lmBufEG7P7Y1HClYK3gCxYrkgS.jpg",
     "genre_ids": [12, 28, 878],
@@ -277,7 +259,7 @@
     "poster_path": "/6WBeq4fCfn7AN0o21W9qNcRF2l9.jpg",
     "release_date": "2010-04-28",
     "title": "Iron Man 2",
-    "video": false,
+    
     "vote_average": 6.843,
     "vote_count": 20759
   },
@@ -296,7 +278,7 @@
     "vote_count": 7085
   },
 {
-    "adult": false,
+    
     "backdrop_path": "/x6b57gOE0Of8b2tnZ9UFT3brTpi.jpg",
     "genre_ids": [10402, 28],
     "kind": "Action",
@@ -308,12 +290,12 @@
     "poster_path": "/advsp2BXSDQx6igHI9FrgYcISVU.jpg",
     "release_date": "2017-03-17",
     "title": "Hard Way: The Action Musical",
-    "video": false,
+    
     "vote_average": 7.6,
     "vote_count": 5
   },
   {
-    "adult": false,
+    
     "backdrop_path": "/fIRvVMDduUZZVIQXh0ysTF4j9cZ.jpg",
     "genre_ids": [28],
     "kind": "Action",
@@ -325,12 +307,12 @@
     "poster_path": "/yKvcEN7QsA8uoRlLnTh41Wj0RYt.jpg",
     "release_date": "2022-12-26",
     "title": "Action Team Overlord Flower",
-    "video": false,
+    
     "vote_average": 4.3,
     "vote_count": 3
   },
   {
-    "adult": false,
+    
     "backdrop_path": "/romORaZvZqMRjTPgw0HrAZpVn9V.jpg",
     "genre_ids": [28, 53],
     "kind": "Action",
@@ -342,12 +324,12 @@
     "poster_path": "/3cVmG3G4YezZNLlJ4RuyE3MgKkE.jpg",
     "release_date": "2014-12-05",
     "title": "Action Jackson",
-    "video": false,
+    
     "vote_average": 4.2,
     "vote_count": 35
   },
   {
-    "adult": false,
+    
     "backdrop_path": "/5kPcNvSmUU1jno1yVuFKkBAmfbj.jpg",
     "genre_ids": [99, 10770],
     "kind": "Action",
@@ -359,12 +341,12 @@
     "poster_path": "/bSSGZLWKWt4RAf68mMgjUMfZIRw.jpg",
     "release_date": "2021-08-04",
     "title": "Jackie Chan: Building an Icon",
-    "video": false,
+    
     "vote_average": 7.7,
     "vote_count": 7
 },
 {
-    "adult": false,
+    
     "backdrop_path": "/p5OSk41qSfhoh18ZkF7tzg4QjIN.jpg",
     "genre_ids": [18, 10749],
     "kind": "Action",
@@ -376,7 +358,7 @@
     "poster_path": "/ymnlN8fhRDx0dmkqmZW4mQCbLXs.jpg",
     "release_date": "1988-03-09",
     "title": "Kung-Fu Master!",
-    "video": false,
+    
     "vote_average": 6.5,
     "vote_count": 64
 },
@@ -433,7 +415,7 @@
     "poster_path": "/yBQ6iBI7BcDWlgUzWzJNSvbWe8s.jpg",
     "release_date": "",
     "title": "The Last Train to New York",
-    "video": false,
+    
     "vote_average": 0,
     "vote_count": 0
   },
@@ -449,12 +431,12 @@
   "poster_path": "/nSk3MOK5ljYql9P2htwkTOd7rfn.jpg",
   "release_date": "2004-03-03",
   "title": "Kingdom Hospital",
-  "video": false,
+  
   "vote_average": 6.4,
   "vote_count": 48
 },
 {
-    "adult": false,
+    
     "backdrop_path": "/hziiv14OpD73u9gAak4XDDfBKa2.jpg",
     "genre_ids": [12, 14],
     "id": 671,
@@ -466,12 +448,12 @@
     "poster_path": "/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg",
     "release_date": "2001-11-16",
     "title": "Harry Potter and the Philosopher's Stone",
-    "video": false,
+    
     "vote_average": 7.913,
     "vote_count": 27045
   },
   {
-    "adult": false,
+    
     "backdrop_path": "/yHzyPJrVqlTySQ9mc379yxrLBYQ.jpg",
     "genre_ids": [12, 14],
     "kind": "Harry Potter Series",
@@ -483,12 +465,12 @@
     "poster_path": "/sdEOH0992YZ0QSxgXNIGLq1ToUi.jpg",
     "release_date": "2002-11-13",
     "title": "Harry Potter and the Chamber of Secrets",
-    "video": false,
+    
     "vote_average": 7.721,
     "vote_count": 21654
   },
   {
-    "adult": false,
+    
     "backdrop_path": "/obKmfNexgL4ZP5cAmzdL4KbHHYX.jpg",
     "kind": "Harry Potter Series",
     "genre_ids": [12, 14],
@@ -500,12 +482,12 @@
     "poster_path": "/aWxwnYoe8p2d2fcxOqtvAtJ72Rw.jpg",
     "release_date": "2004-05-31",
     "title": "Harry Potter and the Prisoner of Azkaban",
-    "video": false,
+    
     "vote_average": 8.018,
     "vote_count": 21279
   },
   {
-    "adult": false,
+    
     "backdrop_path": "/5rrGVmRUuCKVbqUu41XIWTXJmNA.jpg",
     "kind": "Harry Potter Series",
     "genre_ids": [12, 14],
@@ -517,12 +499,12 @@
     "poster_path": "/fECBtHlr0RB3foNHDiCBXeg9Bv9.jpg",
     "release_date": "2005-11-16",
     "title": "Harry Potter and the Goblet of Fire",
-    "video": false,
+    
     "vote_average": 7.814,
     "vote_count": 20408
   },
   {
-    "adult": false,
+    
     "backdrop_path": "/r5xT55Era1XrpAq6XNsrPpozNjM.jpg",
     "kind": "Harry Potter Series",
     "genre_ids": [12, 14],
@@ -534,12 +516,12 @@
     "poster_path": "/z7uo9zmQdQwU5ZJHFpv2Upl30i1.jpg",
     "release_date": "2009-07-15",
     "title": "Harry Potter and the Half-Blood Prince",
-    "video": false,
+    
     "vote_average": 7.693,
     "vote_count": 19180
   },
   {
-    "adult": false,
+    
     "backdrop_path": "/pkxPkHOPJjOvzfQOclANEBT8OfK.jpg",
     "kind": "Harry Potter Series",
     "genre_ids": [12, 14],
@@ -551,12 +533,12 @@
     "poster_path": "/5aOyriWkPec0zUDxmHFP9qMmBaj.jpg",
     "release_date": "2007-07-08",
     "title": "Harry Potter and the Order of the Phoenix",
-    "video": false,
+    
     "vote_average": 7.681,
     "vote_count": 19204
   },
   {
-    "adult": false,
+    
     "backdrop_path": "/n5A7brJCjejceZmHyujwUTVgQNC.jpg",
     "kind": "Harry Potter Series",
     "genre_ids": [14, 12],
@@ -568,12 +550,12 @@
     "poster_path": "/c54HpQmuwXjHq2C9wmoACjxoom3.jpg",
     "release_date": "2011-07-12",
     "title": "Harry Potter and the Deathly Hallows: Part 2",
-    "video": false,
+    
     "vote_average": 8.096,
     "vote_count": 20303
   },
   {
-    "adult": false,
+    
     "backdrop_path": "/AqLcLsGGTzAjm3pCCq0CZCQrp6m.jpg",
     "kind": "Harry Potter Series",
     "genre_ids": [12, 14],
@@ -585,12 +567,12 @@
     "poster_path": "/iGoXIpQb7Pot00EEdwpwPajheZ5.jpg",
     "release_date": "2010-11-17",
     "title": "Harry Potter and the Deathly Hallows: Part 1",
-    "video": false,
+    
     "vote_average": 7.753,
     "vote_count": 18819
   },
   {
-    "adult": false,
+    
     "backdrop_path": "/bqlfDdEnDiyMp5DxYl50FIrvyNO.jpg",
     "kind": "Harry Potter Series",
     "genre_ids": [99],
@@ -602,7 +584,7 @@
     "poster_path": "/jntLBq0MLR3hrwKaTQswxACRPMs.jpg",
     "release_date": "2022-01-01",
     "title": "Harry Potter 20th Anniversary: Return to Hogwarts",
-    "video": false,
+    
     "vote_average": 7.31,
     "vote_count": 3270
   }

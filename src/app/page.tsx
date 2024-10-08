@@ -13,7 +13,7 @@ const ACCESS_TOKEN = process.env.NEXT_PUBLIC_API_TOKEN;
 export default function Home() {
   const [loading, setLoading] = useState<boolean>(true);
   const searchParams = useSearchParams();
-  const genre = searchParams.get("genre") || "mylist";
+  const genre = searchParams.get("genre") || "home";
 
   useEffect(() => {
     const fetchMedia = async () => {

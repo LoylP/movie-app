@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation';
 export default function NavbarItems({title, param} : {title: string, param: string}) {
     const searchParams = useSearchParams();
     const genre = searchParams.get('genre');
-    const isActive = genre === param || (title === 'About' && genre === null);
+    const isActive = genre === param || (title === 'Home' && genre === null);
 
     return(
         <div>
