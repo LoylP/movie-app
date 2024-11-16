@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { GoUnmute, GoMute } from 'react-icons/go';
 import anime from '../../public/anime.json';
+import Link from 'next/link';
+
 
 interface Props {
   id: number;
@@ -31,6 +33,13 @@ const Anime = () => {
     setCurrentBanner(banner);
   };
 
+
+  // const handleClick = () => {
+  //   localStorage.setItem("movieData", JSON.stringify(currentBanner));
+  //   router.push(`/movie/${currentBanner.id}`);
+  // };
+
+
   return (
     <div className="relative h-[56.25vw]">
       {currentBanner.videoUrl && (
@@ -54,9 +63,11 @@ const Anime = () => {
           {currentBanner?.description}
         </p>
         <div className="flex flex-row items-center mt-3 md:mt-4 gap-3">
+        <Link href={`/movie/${currentBanner.id}`} passHref>
           <button className="bg-white text-white bg-opacity-30 rounded-md py-1 md:py-2 px-2 md:px-4 w-auto text-xs lg:text-lg font-semibold flex flex-row items-center hover:bg-opacity-20 transition">
             More Info
           </button>
+        </Link>
           <button
             className="bg-white text-white bg-opacity-30 rounded-md py-1 md:py-2 px-2 md:px-4 w-auto text-xs lg:text-lg font-semibold flex flex-row items-center hover:bg-opacity-20 transition"
             onClick={toggleMute}

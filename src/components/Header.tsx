@@ -71,7 +71,9 @@ export default function Header() {
             </form>
             <DarkModeSwitch />
             <IoIosNotificationsOutline className="text-2xl"/>
-            <RxAvatar className="text-2xl"/>
+            <Link href="/login">
+                <RxAvatar className="text-2xl"/>
+            </Link>
           </div>  
         </div>
     )

@@ -1,13 +1,11 @@
 "use client";
-// Import necessary modules
 import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import Loading from "@/components/Loading";
-import { FaPlay } from "react-icons/fa6";
+import { FaPlay, FaHeart } from "react-icons/fa6";
 import sampleData from "public/data.json";
 
-// const ACCESS_TOKEN = process.env.NEXT_PUBLIC_API_TOKEN;
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 interface MovieDetails {
@@ -29,25 +27,18 @@ export default function MoviePage() {
   const { id } = useParams();
   const [movie, setMovie] = useState<MovieDetails | null>(null);
   const [loading, setLoading] = useState(true);
+  const [favourites, setFavourites] = useState<MovieDetails[]>([]);
 
   const fetchMovieDetails = useCallback(async () => {
     try {
-      // First, check if the movie is in sampleData
       const sampleMovie = sampleData.results.find(
         (m) => m.id.toString() === id
       );
       if (sampleMovie) {
         setMovie(sampleMovie as MovieDetails);
       } else {
-        // If not in sampleData, fetch from API
         const response = await fetch(
           `https://api.themoviedb.org/3/movie/${id}?language=en-US?api_key=${API_KEY}`
-          // {
-          //   headers: {
-          //     Authorization: `Bearer ${ACCESS_TOKEN}`,
-          //     accept: "application/json",
-          //   },
-          // }
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -71,11 +62,34 @@ export default function MoviePage() {
       fetchMovieDetails();
     }
 
-    // Cleanup
+    // Load favourites from localStorage
+    const storedFavourites = localStorage.getItem("favourites");
+    if (storedFavourites) {
+      setFavourites(JSON.parse(storedFavourites));
+    }
+
     return () => {
       localStorage.removeItem("movieData");
     };
   }, [fetchMovieDetails]);
+
+  const handleAddToFavourite = () => {
+    if (!movie) return;
+
+    const isFavourite = favourites.some((favourite) => favourite.id === movie.id);
+    let updatedFavourites;
+
+    if (isFavourite) {
+      // Remove from favourites
+      updatedFavourites = favourites.filter((favourite) => favourite.id !== movie.id);
+    } else {
+      // Add to favourites
+      updatedFavourites = [...favourites, movie];
+    }
+
+    setFavourites(updatedFavourites);
+    localStorage.setItem("favourites", JSON.stringify(updatedFavourites));
+  };
 
   if (loading) {
     return (
@@ -88,6 +102,8 @@ export default function MoviePage() {
   if (!movie) {
     return <div>Movie not found</div>;
   }
+
+  const isFavourite = favourites.some((favourite) => favourite.id === movie.id);
 
   return (
     <div className="relative w-full min-h-screen text-black dark:text-gray-200">
@@ -153,6 +169,14 @@ export default function MoviePage() {
               {movie.number_of_seasons}
             </p>
           )}
+          {/* Favourite Button */}
+          <button
+            onClick={handleAddToFavourite}
+            className="flex items-center gap-2 text-xl mt-4 py-2 px-4 rounded-lg border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-all duration-300"
+          >
+            <FaHeart className={`${isFavourite ? "text-red-600" : "text-gray-500"}`} />
+            {isFavourite ? "Remove from Favourites" : "Add to Favourites"}
+          </button>
         </div>
       </div>
     </div>
