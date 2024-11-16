@@ -7,6 +7,7 @@ import Sample from "@/components/Sample";
 import Billboard from "@/components/Billboard";
 import Anime from "@/components/Anime";
 import Movie from "@/components/Movie";
+import MyListPage from "./mylist/page";
 
 const ACCESS_TOKEN = process.env.NEXT_PUBLIC_API_TOKEN;
 
@@ -64,7 +65,7 @@ export default function Home() {
   if (genre === "mylist") {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <h1 className="text-3xl font-bold">No favorite list yet</h1>
+        <MyListPage/>
       </div>
     );
   }
