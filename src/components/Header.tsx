@@ -8,14 +8,32 @@ import { RxAvatar } from 'react-icons/rx';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react'; 
+import { getCurrentUser } from '@/api/auth';
 
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchVisible, setIsSearchVisible] = useState(false); 
   const [isScrolled, setIsScrolled] = useState(false); 
+  const [user, setUser] = useState('');
   const router = useRouter();
 
+  // get all genres
   useEffect(() => {
+
+  },[]);
+
+  useEffect(() => {
+    async function fetchUser() {
+      const user = await getCurrentUser();
+      if (user) {
+        setUser(user.username);
+      }
+      return user
+    }
+    fetchUser();
+  }, []);
+
+  useEffect(() => {  
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50); 
     };
@@ -54,26 +72,39 @@ export default function Header() {
           
           </div>
           <div className='flex items-center gap-4 mr-5 text-white'>
-            <form onSubmit={handleSubmit} className='inline-flex justify-left p-1 bg-gray-300 border rounded-lg ml-4'>
-              {isSearchVisible && ( 
-                <input 
-                  type='text' 
-                  value={searchQuery} 
-                  onChange={(e) => setSearchQuery(e.target.value)} 
-                  placeholder='Search...' 
-                  className='ml-2 bg-transparent text-black focus:outline-none'
-                  autoFocus
-                />
-              )}
-              <button type="button" onClick={() => setIsSearchVisible(!isSearchVisible)} className='text-black'>
-                <BsSearch size={20} />
-              </button>
-            </form>
-            <DarkModeSwitch />
-            <IoIosNotificationsOutline className="text-2xl"/>
-            <Link href="/login">
-                <RxAvatar className="text-2xl"/>
-            </Link>
+            {user? (
+                <>
+                <form onSubmit={handleSubmit} className='inline-flex justify-left p-1 bg-gray-300 border rounded-lg ml-4'>
+                {isSearchVisible && ( 
+                  <input 
+                    type='text' 
+                    value={searchQuery} 
+                    onChange={(e) => setSearchQuery(e.target.value)} 
+                    placeholder='Search...' 
+                    className='ml-2 bg-transparent text-black focus:outline-none'
+                    autoFocus
+                  />
+                )}
+                <button type="button" onClick={() => setIsSearchVisible(!isSearchVisible)} className='text-black'>
+                  <BsSearch size={20} />
+                </button>
+              </form>
+              <DarkModeSwitch />
+              <IoIosNotificationsOutline className="text-2xl"/>
+              <Link href="/profile">
+                  <RxAvatar className="text-2xl"/>
+              </Link>
+                </>
+            ):(
+              <>
+              <Link href="/login">
+                  <button className='bg-green-500 px-2 py-1 rounded-lg'>Login</button>
+              </Link>
+              <Link href="/register">
+                  <button className='bg-green-500 px-2 py-1 rounded-lg'>Register</button>
+              </Link>
+              </>
+            )}
           </div>  
         </div>
     )
