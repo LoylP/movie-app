@@ -1,9 +1,24 @@
-"use client"
-
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { FaEye, FaEyeSlash, FaUserAlt, FaLock } from 'react-icons/fa';
 import { BiHomeAlt, BiCameraMovie } from 'react-icons/bi';
+import axios from 'axios';
+
+// func to login user using username and password using axios
+const loginUser = async (username, password) => {
+  try {
+    const response = await axios.post('http://localhost:8000/users/login', {
+      username,
+      password,
+    });
+    // store token in local cookie and set expire date to 1 hour
+    document.cookie = `token=${response.data.access_token}; expires=${new Date(Date.now() + 3600000).toUTCString()}; path=/`;
+    
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 
 const LoginPage = () => {
   const [userName, setUserName] = useState('');
@@ -127,6 +142,14 @@ const LoginPage = () => {
 
             <div>
               <button
+                onClick={async (e) => {
+                  e.preventDefault();
+                  try {
+                    await loginUser(userName, password);
+                  } catch (error) {
+                    console.error(error);
+                  }
+                }}
                 type="submit"
                 className="w-full py-3 px-4 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition duration-200"
               >
