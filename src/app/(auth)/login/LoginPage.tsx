@@ -1,8 +1,10 @@
+'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { FaEye, FaEyeSlash, FaUserAlt, FaLock } from 'react-icons/fa';
 import { BiHomeAlt, BiCameraMovie } from 'react-icons/bi';
 import axios from 'axios';
+import { useRouter } from 'next/navigation'; 
 
 // func to login user using username and password using axios
 const loginUser = async (username, password) => {
@@ -13,9 +15,10 @@ const loginUser = async (username, password) => {
     });
     // store token in local cookie and set expire date to 1 hour
     document.cookie = `token=${response.data.access_token}; expires=${new Date(Date.now() + 3600000).toUTCString()}; path=/`;
-    
+    return true 
   } catch (error) {
     console.error(error);
+    return false
   }
 };
 
@@ -24,6 +27,7 @@ const LoginPage = () => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter(); // Initialize useRouter hook
 
   return (
     <div className="min-h-screen w-full flex">
@@ -144,10 +148,11 @@ const LoginPage = () => {
               <button
                 onClick={async (e) => {
                   e.preventDefault();
-                  try {
-                    await loginUser(userName, password);
-                  } catch (error) {
-                    console.error(error);
+                  const success = await loginUser(userName, password);
+                  if (success) {
+                    router.back();
+                  } else {
+                    alert('Login failed. Please check your credentials.');
                   }
                 }}
                 type="submit"
