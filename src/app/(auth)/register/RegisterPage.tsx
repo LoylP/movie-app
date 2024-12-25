@@ -178,7 +178,7 @@ const RegisterPage = () => {
                   if (success) {
                     router.back();
                   } else {
-                    alert('Login failed. Please check your credentials.');
+                    alert('Register failed. Please check your credentials.');
                   }
                 }}
               >
