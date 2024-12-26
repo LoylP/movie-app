@@ -3,24 +3,56 @@ import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import Loading from "@/components/Loading";
-import { FaPlay, FaHeart } from "react-icons/fa6";
-import sampleData from "public/data.json";
+import { FaPlay, FaHeart, FaGlobe } from "react-icons/fa6";
+import { getMovieDetail } from "@/api/movie";
 
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+interface Genres_detail {
+  genre_id: number;
+  name: string;
+}
+
+interface Genres {
+  genres: Genres_detail;
+}
+
+interface Actors_detail {
+  actor_id: number;
+  gender: string;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+}
+
+interface Actors {
+  actors: Actors_detail;
+  character: string;
+}
 
 interface MovieDetails {
-  id: number;
-  title?: string;
-  name?: string;
+  movie_id: number;
+  title: string;
   overview: string;
-  backdrop_path?: string;
-  poster_path?: string;
-  release_date?: string;
-  first_air_date?: string;
+  backdrop_path: string;
+  poster_path: string;
+  release_date: string;
   vote_average: number;
   vote_count: number;
-  runtime?: number;
-  number_of_seasons?: number;
+  movie_details: {
+    budget: number;
+    status: string;
+    revenue: number;
+    runtime: number;
+    tagline: string;
+    homepage: string;
+    video_url: string;
+    spoken_language: string[];
+    production_companies: string[];
+    production_countries: string[];
+  };
+  genres: Genres[];
+  actors: Actors[];
 }
 
 export default function MoviePage() {
@@ -31,21 +63,8 @@ export default function MoviePage() {
 
   const fetchMovieDetails = useCallback(async () => {
     try {
-      const sampleMovie = sampleData.results.find(
-        (m) => m.id.toString() === id
-      );
-      if (sampleMovie) {
-        setMovie(sampleMovie as MovieDetails);
-      } else {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/movie/${id}?language=en-US?api_key=${API_KEY}`
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setMovie(data);
-      }
+      const data = await getMovieDetail(id);
+      setMovie(data);
     } catch (error) {
       console.error("Error fetching movie details:", error);
     } finally {
@@ -54,36 +73,23 @@ export default function MoviePage() {
   }, [id]);
 
   useEffect(() => {
-    const storedData = localStorage.getItem("movieData");
-    if (storedData) {
-      setMovie(JSON.parse(storedData));
-      setLoading(false);
-    } else {
-      fetchMovieDetails();
-    }
+    fetchMovieDetails();
 
-    // Load favourites from localStorage
     const storedFavourites = localStorage.getItem("favourites");
     if (storedFavourites) {
       setFavourites(JSON.parse(storedFavourites));
     }
-
-    return () => {
-      localStorage.removeItem("movieData");
-    };
   }, [fetchMovieDetails]);
 
   const handleAddToFavourite = () => {
     if (!movie) return;
 
-    const isFavourite = favourites.some((favourite) => favourite.id === movie.id);
+    const isFavourite = favourites.some((favourite) => favourite.movie_id === movie.movie_id);
     let updatedFavourites;
 
     if (isFavourite) {
-      // Remove from favourites
-      updatedFavourites = favourites.filter((favourite) => favourite.id !== movie.id);
+      updatedFavourites = favourites.filter((favourite) => favourite.movie_id !== movie.movie_id);
     } else {
-      // Add to favourites
       updatedFavourites = [...favourites, movie];
     }
 
@@ -93,92 +99,135 @@ export default function MoviePage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen bg-black">
         <Loading />
       </div>
     );
   }
 
   if (!movie) {
-    return <div>Movie not found</div>;
+    return <div className="text-white">Movie not found</div>;
   }
 
-  const isFavourite = favourites.some((favourite) => favourite.id === movie.id);
+  const isFavourite = favourites.some((favourite) => favourite.movie_id === movie.movie_id);
 
   return (
-    <div className="relative w-full min-h-screen text-black dark:text-gray-200">
-      {/* Background Image */}
-      <div className="w-[20%] h-[20%]">
-        <h1 className="dark:text-zinc-900 text-zinc-900 font-bold mb-4 lg:text-white">
-          .
-        </h1>
-      </div>
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-black opacity-40"></div>
+  <div className="pt-16 relative w-full min-h-screen bg-black text-white">
+    {/* Background */}
+    <div className="absolute inset-0">
+      <Image
+        src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
+        alt={movie.title}
+        layout="fill"
+        objectFit="cover"
+        className="opacity-50"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black"></div>
+    </div>
+  
+    {/* Content */}
+    <div className="relative z-10 flex flex-col lg:flex-row max-w-7xl mx-auto p-6 lg:p-12">
+      {/* Movie Poster */}
+      <div className="relative w-full lg:w-1/3 aspect-[2/3] shadow-lg">
         <Image
-          src={`https://image.tmdb.org/t/p/original${movie.backdrop_path || movie.poster_path}`}
-          alt={movie.title || movie.name || ""}
+          src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+          alt={movie.title}
           layout="fill"
           objectFit="cover"
-          className="opacity-60"
+          className="rounded-lg"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
       </div>
-
-      {/* Content */}
-      <div className="relative z-10 p-4 md:pt-8 flex flex-col md:flex-row max-w-6xl mx-auto md:space-x-6">
-        <div className="relative w-full md:w-1/3 aspect-[2/3] shadow-2xl">
-          <Image
-            src={`https://image.tmdb.org/t/p/original${movie.poster_path || movie.backdrop_path}`}
-            alt={movie.title || movie.name || ""}
-            layout="fill"
-            objectFit="cover"
-            className="rounded-lg"
-          />
+  
+      {/* Movie Details */}
+      <div className="lg:w-2/3 lg:pl-10 mt-6 lg:mt-0">
+        <h1 className="text-4xl lg:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-white">
+          {movie.title}
+        </h1>
+        <p className="italic text-gray-400 mb-6">{movie.movie_details.tagline}</p>
+        <p className="text-lg leading-relaxed mb-6">{movie.overview}</p>
+  
+        {/* Genres */}
+        <div className="flex flex-wrap gap-3 mb-6">
+          {movie.genres.map((genre) => (
+            <span
+              key={genre.genres.genre_id}
+              className="px-3 py-1 bg-gradient-to-r from-red-500 to-red-700 rounded-full text-sm shadow-lg"
+            >
+              {genre.genres.name}
+            </span>
+          ))}
         </div>
-        <div className="p-3 md:w-2/3">
-          <h1 className="text-6xl mb-10 font-bold subpixel-antialiased text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-red-600 drop-shadow-lg">
-            {movie.title || movie.name}
-          </h1>
-          <p className="text-xl mb-5">{movie.overview}</p>
-          <div className="flex mb-5">
-            <button className="flex items-center justify-center gap-2 text-2xl bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl">
-              Play now <FaPlay className="text-xl" />
-            </button>
-            <button className="mx-5 flex items-center justify-center gap-2 text-2xl hover:bg-blue-500 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 border-2 border-white">
-              Trailer
-            </button>
-          </div>
-          <p className="mb-3">
-            <span className="font-semibold mr-1">Date Released:</span>
-            {movie.release_date || movie.first_air_date}
-          </p>
-          <p className="mb-3">
-            <span className="font-semibold mr-1">Rating:</span>
-            {movie.vote_average.toFixed(1)} ({movie.vote_count} votes)
-          </p>
-          {movie.runtime && (
-            <p className="mb-3">
-              <span className="font-semibold mr-1">Runtime:</span>
-              {movie.runtime} minutes
-            </p>
-          )}
-          {movie.number_of_seasons && (
-            <p className="mb-3">
-              <span className="font-semibold mr-1">Seasons:</span>
-              {movie.number_of_seasons}
-            </p>
-          )}
-          {/* Favourite Button */}
+  
+        {/* Buttons */}
+        <div className="flex flex-wrap gap-4 mb-6">
+          <a
+            href={`https://www.youtube.com/watch?v=${movie.movie_details.video_url}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 text-lg bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-xl shadow-md transition"
+          >
+            Play Now <FaPlay />
+          </a>
+          <a
+            href={movie.movie_details.homepage}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 text-lg border-2 border-white text-white font-semibold py-3 px-6 rounded-xl transition hover:bg-gray-800"
+          >
+            Official Site <FaGlobe />
+          </a>
+          {/* Favourites Button */}
           <button
             onClick={handleAddToFavourite}
-            className="flex items-center gap-2 text-xl mt-4 py-2 px-4 rounded-lg border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-all duration-300"
+            className={`flex items-center gap-2 text-lg py-2 px-4 rounded-lg border-2 transition ${
+              isFavourite ? "text-red-500 border-red-500" : "text-gray-300 border-gray-500"
+            } hover:bg-red-600 hover:text-white`}
           >
-            <FaHeart className={`${isFavourite ? "text-red-600" : "text-gray-500"}`} />
-            {isFavourite ? "Remove from Favourites" : "Add to Favourites"}
+            <FaHeart className={isFavourite ? "text-red-500" : "text-gray-400"} />
           </button>
+        </div>
+  
+        {/* Additional Details */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm mb-6">
+          <p><strong>Release Date:</strong> {movie.release_date}</p>
+          <p><strong>Rating:</strong> {movie.vote_average.toFixed(1)} ({movie.vote_count} votes)</p>
+          <p><strong>Runtime:</strong> {movie.movie_details.runtime} minutes</p>
+          <p><strong>Budget:</strong> ${movie.movie_details.budget.toLocaleString()}</p>
+          <p><strong>Revenue:</strong> ${movie.movie_details.revenue.toLocaleString()}</p>
+          <p><strong>Status:</strong> {movie.movie_details.status}</p>
         </div>
       </div>
     </div>
+  
+    {/* Actors Section */}
+    <div className="max-w-7xl mx-auto p-6 lg:p-12">
+      <h2 className="text-3xl font-semibold mb-6">Cast</h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+        {movie.actors.map((actor) => (
+          <div key={actor.actors.actor_id} className="text-center">
+            {actor.actors.profile_path && (
+              <Image
+                src={`https://image.tmdb.org/t/p/w200${actor.actors.profile_path}`}
+                alt={actor.actors.name}
+                width={100}
+                height={100}
+                className="rounded-full mx-auto mb-3"
+              />
+            )}
+            <p className="font-medium">{actor.actors.name}</p>
+            <p className="text-gray-400 text-sm">{actor.character}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  
+    {/* Additional Information */}
+    <div className="max-w-7xl mx-auto p-6 lg:p-12">
+      <h2 className="text-3xl font-semibold mb-6">Additional Information</h2>
+      <p><strong>Languages:</strong> {movie.movie_details.spoken_language.join(", ")}</p>
+      <p><strong>Production Companies:</strong> {movie.movie_details.production_companies.join(", ")}</p>
+      <p><strong>Production Countries:</strong> {movie.movie_details.production_countries.join(", ")}</p>
+    </div>
+  </div>
   );
 }
