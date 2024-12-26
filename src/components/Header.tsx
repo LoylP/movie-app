@@ -64,12 +64,11 @@ export default function Header() {
           </div>
           <div className='flex-1 flex justify-center gap-10 text-white'>
             <NavbarItems title='Home' param='home'/>
+            <NavbarItems title='Genres' param='genre' />
+            <NavbarItems title='Actors' param='actor' />
             <NavbarItems title='My list' param='mylist' />
-            <NavbarItems title='New & Popular' param='new-popular' />
-            <NavbarItems title='Movies' param='movie' />
-            <NavbarItems title='Anime' param='anime' />
+            <NavbarItems title='History' param='history' />
             <NavbarItems title='About' param='about' />
-          
           </div>
           <div className='flex items-center gap-4 mr-5 text-white'>
             {user? (
