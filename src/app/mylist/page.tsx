@@ -1,93 +1,151 @@
 'use client';
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from 'react';
 import Image from "next/image";
-import { FaPlay, FaHeart } from "react-icons/fa6";
-import { useRouter } from "next/navigation"; // Import useRouter for navigation
+import Link from 'next/link';
+import {getAllFavouriteMovie} from '@/api/auth';
 
-type Movie = {
-  id: number;
-  title?: string;
-  name?: string;
-  poster_path?: string;
-  backdrop_path?: string;
-};
 
-const MyListPage = () => {
-  const [favourites, setFavourites] = useState<Movie[]>([]);
-  const router = useRouter();
+// Loading component
+const Loading = () => (
+  <div className="flex justify-center items-center min-h-screen bg-black">
+    <div className="spinner-border animate-spin border-t-2 border-b-2 border-red-600 w-12 h-12 rounded-full"></div>
+  </div>
+);
+
+export default function Home() {
+  const [movies, setMovies] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const storedFavourites = localStorage.getItem("favourites");
-    if (storedFavourites) {
-      setFavourites(JSON.parse(storedFavourites));
-    }
-  }, []);
+    const getMovies = async (page = 1) => {
+      try {
+        setIsLoading(true);
+        const response = await getAllFavouriteMovie(page);
+        setMovies(response.data);
+        setTotalPages(response.count);
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  // Remove a video from the favourites list
-  const removeFromFavourites = (movieId: number) => {
-    const updatedFavourites = favourites.filter((movie) => movie.id !== movieId);
-    setFavourites(updatedFavourites);
-    localStorage.setItem("favourites", JSON.stringify(updatedFavourites));
+    getMovies(currentPage);
+  }, [currentPage]);
+
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+      window.scrollTo(0, 0);
+    }
   };
 
-  if (favourites.length === 0) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <h1 className="text-3xl font-bold">No favorite list yet</h1>
-      </div>
-    );
-  }
+  const generatePageNumbers = () => {
+    const pageNumbers = [];
+    const maxDisplayed = 5;
+    const range = 2;
+
+    if (totalPages <= maxDisplayed) {
+      for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+      }
+    } else {
+      if (currentPage > range + 1) {
+        pageNumbers.push(1, '...');
+      }
+      for (let i = Math.max(1, currentPage - range); i <= Math.min(totalPages, currentPage + range); i++) {
+        pageNumbers.push(i);
+      }
+      if (currentPage < totalPages - range) {
+        pageNumbers.push('...', totalPages);
+      }
+    }
+    return pageNumbers;
+  };
 
   return (
-    <div className="relative">
-      <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+    <div className="pt-16 min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900 text-white">
+      <div className="container mx-auto py-8">
+        <h1 className="text-4xl font-extrabold mb-6 text-center">Your Favorite</h1>
 
-      <div className="max-w-6xl text-lg mx-auto space-y-4 p-8">
-        <div className="flex text-4xl font-medium my-auto my-10">
-          <h1>Your Favourite Videos</h1>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {favourites.map((movie) => (
-            <div
-              key={movie.id}
-              className="relative bg-gray-800 text-white rounded-lg shadow-lg cursor-pointer transform transition-all duration-300 ease-in-out scale-100"
-              onClick={() => router.push(`/movie/${movie.id}`)} // Navigate to movie details page
-            >
-              <div className="relative h-60 w-full">
-                <Image
-                  src={`https://image.tmdb.org/t/p/original${movie.poster_path || movie.backdrop_path}`}
-                  alt={movie.title || movie.name || "Movie Poster"}
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-t-lg"
-                />
-              </div>
-              <div className="p-4">
-                <h2 className="text-xl font-bold">{movie.title || movie.name}</h2>
-                <div className="flex justify-between items-center mt-4">
-                  <button className="flex items-center gap-2 text-sm bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300">
-                    <FaPlay className="text-xl" />
-                    Play
-                  </button>
-                  <button
-                    className="flex items-center gap-2 text-sm text-red-600 hover:text-white font-bold py-2 px-4 rounded-lg border-2 border-red-600 hover:bg-red-600 transition-all duration-300"
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent click event from triggering navigation
-                      removeFromFavourites(movie.id); // Remove from favourites
-                    }}
-                  >
-                    <FaHeart className="text-xl" />
-                    Remove
-                  </button>
-                </div>
-              </div>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+              {movies.map((movie) => (
+                <Link
+                  key={movie.movies.movie_id}
+                  className="cursor-pointer group relative bg-gray-800 rounded-lg overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
+                  href={`/movie/${movie.movies.movie_id}`}
+                >
+                  <Image
+                    src={`https://image.tmdb.org/t/p/w500${movie.movies.poster_path}`}
+                    alt={movie.movies.title}
+                    width={300}
+                    height={450}
+                    className="object-cover w-full h-full"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                    <h2 className="text-base font-bold mb-1">{movie.movies.title}</h2>
+                    <p className="text-sm mb-2">{movie.movies.overview.slice(0, 100)}...</p>
+                    <p className="text-xs">
+                      <strong>Release Date:</strong> {movie.movies.release_date}
+                    </p>
+                    <p className="text-xs">
+                      <strong>Vote Average:</strong> {movie.movies.vote_average}
+                    </p>
+                    <p className="text-xs">
+                      <strong>Popularity:</strong> {movie.movies.popularity}
+                    </p>
+                  </div>
+                </Link>
+              ))}
             </div>
-          ))}
-        </div>
+
+            <div className="flex justify-center items-center mt-8 space-x-2">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="px-4 py-2 bg-gray-700 text-white rounded-lg disabled:opacity-50 hover:bg-gray-600 transition-colors duration-200"
+              >
+                Previous
+              </button>
+
+              {generatePageNumbers().map((page, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    if (page !== '...') {
+                      handlePageChange(page);
+                    }
+                  }}
+                  className={`px-4 py-2 rounded-lg ${
+                    page === currentPage
+                      ? 'bg-red-600 text-white'
+                      : page === '...'
+                      ? 'bg-transparent text-gray-500'
+                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white transition-colors duration-200'
+                  }`}
+                  disabled={page === '...'}
+                >
+                  {page}
+                </button>
+              ))}
+
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 bg-gray-700 text-white rounded-lg disabled:opacity-50 hover:bg-gray-600 transition-colors duration-200"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
-};
-
-export default MyListPage;
+}

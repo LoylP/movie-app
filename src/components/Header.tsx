@@ -54,6 +54,9 @@ export default function Header() {
   if (path.length > 3 && path[1] === 'movie' && path[2] === 'watch') {
     return <></>
   }
+  if (path[1] === 'register' || path[1] === 'login') {
+    return <></>
+  }
 
     return (
         <div className={`w-full fixed z-40 flex justify-between items-center p-3 mx-auto ${isScrolled ? 'bg-black bg-opacity-80 transition-colors duration-300' : 'bg-transparent transition-colors duration-300'}`}>
@@ -72,7 +75,6 @@ export default function Header() {
           <div className='flex-1 flex justify-center gap-10 text-white'>
             <NavbarItems title='Home' param='home'/>
             <NavbarItems title='Genres' param='genre' />
-            <NavbarItems title='Actors' param='actor' />
             <NavbarItems title='My list' param='mylist' />
             <NavbarItems title='History' param='history' />
             <NavbarItems title='About' param='about' />

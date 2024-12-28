@@ -74,3 +74,50 @@ export const commentForMovie = async (movie_id,comment) => {
     return null
   }
 };
+
+export const addToFavourite = async (movie_id) => {
+  try {
+    const response = await axiosInstance.post(`users/movies/${movie_id}/favorite`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null
+  }
+};
+
+export const deleteFromFavourite = async (movie_id) => {
+  try {
+    const response = await axiosInstance.delete(`users/movies/${movie_id}/favorite`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null
+  }
+};
+
+export const getAllFavouriteMovie = async (page) => {
+  try {
+    const response = await axiosInstance.get(`users/movies/favorite?page=${page}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null
+  }
+};
+
+export const isFavouriteMoive = async (movie_id) => {
+  try {
+    const response = await axiosInstance.get(`users/movies/${movie_id}/favorite`);
+    console.log(response.data);
+    return response.data.status;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null
+  }
+};
+
+
+
+
