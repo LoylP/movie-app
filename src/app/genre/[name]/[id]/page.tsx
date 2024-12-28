@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { getAllMoviesByGerensID } from '@/api/genre';
 import Image from "next/image";
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
+
 
 // Loading component
 const Loading = () => (
@@ -77,9 +79,10 @@ export default function Home() {
           <div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
               {movies.map((movie) => (
-                <div
+                <Link
                   key={movie.movies.movie_id}
                   className="cursor-pointer group relative bg-gray-800 rounded-lg overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
+                  href={`/movie/${movie.movies.movie_id}`}
                 >
                   <Image
                     src={`https://image.tmdb.org/t/p/w500${movie.movies.poster_path}`}
@@ -101,7 +104,7 @@ export default function Home() {
                       <strong>Popularity:</strong> {movie.movies.popularity}
                     </p>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
 

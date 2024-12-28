@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react'; 
 import { getCurrentUser } from '@/api/auth';
+import { usePathname } from 'next/navigation';
 
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -16,6 +17,8 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false); 
   const [user, setUser] = useState('');
   const router = useRouter();
+  const pathName = usePathname();
+  const path = pathName.split('/');
 
   // get all genres
   useEffect(() => {
@@ -48,6 +51,10 @@ export default function Header() {
       router.push(`/search?query=${encodeURIComponent(searchQuery)}`);
     }
   };
+  if (path.length > 3 && path[1] === 'movie' && path[2] === 'watch') {
+    return <></>
+  }
+
     return (
         <div className={`w-full fixed z-40 flex justify-between items-center p-3 mx-auto ${isScrolled ? 'bg-black bg-opacity-80 transition-colors duration-300' : 'bg-transparent transition-colors duration-300'}`}>
           <div>

@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import {getAllGenres} from '@/api/genre';
 import Link from 'next/link';
 
-
-
 export default function GenresPage() {
   const [genres, setGenres] = useState([]);
 

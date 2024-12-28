@@ -62,4 +62,15 @@ export const getCurrentUser = async () => {
       return null
     }
   };
-  
+
+
+export const commentForMovie = async (movie_id,comment) => {
+  try {
+    const response = await axiosInstance.post(`users/movies/${movie_id}/comment?comment=${comment}`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null
+  }
+};
