@@ -6,7 +6,7 @@ import Loading from "@/components/Loading";
 import { FaPlay, FaHeart, FaGlobe } from "react-icons/fa6";
 import { getMovieDetail } from "@/api/movie";
 import Link from 'next/link';
-import { addToFavourite, deleteFromFavourite, isFavouriteMoive } from "@/api/auth";
+import { addToFavourite, deleteFromFavourite, isFavouriteMoive, updateUserWatchHistory } from "@/api/auth";
 
 interface Genres_detail {
   genre_id: number;
@@ -76,6 +76,8 @@ export default function MoviePage() {
       setLoading(false);
     }
   }, [id]);
+
+  
 
   useEffect(() => {
     fetchMovieDetails();
@@ -166,11 +168,14 @@ export default function MoviePage() {
                   video_url: movie.movie_details.video_url,
                   name: movie.title,
                 },
+                
               }}
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 text-lg bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-xl shadow-md transition"
             >
-              Play Now <FaPlay />
+              <button onClick={async()=>await updateUserWatchHistory(movie.movie_id)}>
+              Play Now
+              </button>
             </Link>
             <a
               href={movie.movie_details.homepage}

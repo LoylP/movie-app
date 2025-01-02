@@ -97,16 +97,6 @@ export const deleteFromFavourite = async (movie_id) => {
   }
 };
 
-export const getAllFavouriteMovie = async (page) => {
-  try {
-    const response = await axiosInstance.get(`users/movies/favorite?page=${page}`);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return null
-  }
-};
-
 export const isFavouriteMoive = async (movie_id) => {
   try {
     const response = await axiosInstance.get(`users/movies/${movie_id}/favorite`);
@@ -117,6 +107,49 @@ export const isFavouriteMoive = async (movie_id) => {
     return null
   }
 };
+
+
+export const getAllFavouriteMovie = async (page) => {
+  try {
+    const response = await axiosInstance.get(`users/movies/favorite?page=${page}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null
+  }
+};
+
+export const updateUserWatchHistory = async (movie_id) => {
+  try {
+    const response = await axiosInstance.post(`users/movies/${movie_id}/history/watch`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null
+  }
+}
+
+export const getUserWatchHistory = async (page) => {
+  try {
+    const response = await axiosInstance.get(`users/movies/history/watch?page=${page}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null
+  }
+}
+
+export const getUserRecommend = async () => {
+  try {
+    const response = await axiosInstance.get(`users/AI/recommend`);
+    console.log(response.data.recommend_ids);
+    return response.data.recommend_ids;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null
+  }
+}
 
 
 

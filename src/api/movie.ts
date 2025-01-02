@@ -25,3 +25,13 @@ export const getMovieDetail = async (id) => {
       return [];
     }
 };
+
+export const getMoveComment = async (id) => {
+  try {
+    const comments = await axiosInstance.get(`/movies/${id}/comments`);
+    return comments.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return [];
+  }
+};

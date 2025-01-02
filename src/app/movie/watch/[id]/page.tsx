@@ -3,7 +3,8 @@ import { useParams, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import ReactPlayer from "react-player/youtube";
 import { commentForMovie } from "@/api/auth";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getMoveComment } from "@/api/movie";
 
 export default function WatchMovie() {
   const { id: movieID } = useParams();
@@ -12,19 +13,44 @@ export default function WatchMovie() {
   const title = searchParams.get("name");
   const router = useRouter();
 
-  const [comments, setComments] = useState([
-    { user: "User1", comment: "Great movie!" },
-    { user: "User2", comment: "I loved the cinematography." },
-  ]);
+  const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const comments = await getMoveComment(movieID);
+        setComments(comments);
+      } catch (error) {
+        console.error("Failed to fetch comments:", error);
+      }
+    };
+
+    fetchComments();
+  }, []);
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     if (!newComment.trim()) return;
 
     try {
-      await commentForMovie({ movieID, comment: newComment });
-      setComments([...comments, { user: "You", comment: newComment }]);
+      // Save the comment to the backend
+      await commentForMovie(movieID, newComment);
+
+      // Add the new comment to the state
+      setComments([
+        ...comments,
+        {
+          content: newComment,
+          created_at: new Date().toISOString(), 
+          updated_at: new Date().toISOString(),
+          users: {
+            username: "You",
+          }
+        },
+      ]);
+
+      // Clear the input field
       setNewComment("");
     } catch (error) {
       console.error("Failed to submit comment:", error);
@@ -66,7 +92,10 @@ export default function WatchMovie() {
           {comments.map((comment, index) => (
             <div key={index} className="bg-gray-700 p-3 rounded">
               <p>
-                <strong>{comment.user}:</strong> {comment.comment}
+                <strong>{comment.users.username}:</strong> {comment.content}
+              </p>
+              <p className="text-sm text-gray-400">
+                {new Date(comment.created_at).toLocaleString()}
               </p>
             </div>
           ))}
@@ -82,7 +111,6 @@ export default function WatchMovie() {
             onChange={(e) => setNewComment(e.target.value)}
             placeholder="Write your comment..."
             className="w-full bg-gray-700 p-3 rounded text-white"
-            rows="3"
           />
           <button
             type="submit"

@@ -10,6 +10,8 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react'; 
 import { getCurrentUser } from '@/api/auth';
 import { usePathname } from 'next/navigation';
+import { FaRegLightbulb } from "react-icons/fa";
+
 
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -19,22 +21,28 @@ export default function Header() {
   const router = useRouter();
   const pathName = usePathname();
   const path = pathName.split('/');
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
 
-  // get all genres
-  useEffect(() => {
-
-  },[]);
+  // logout
+  const handleLogout = () => {
+    // Delete the token cookie
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    // Redirect to /login
+    router.push("/login");
+  };
 
   useEffect(() => {
     async function fetchUser() {
       const user = await getCurrentUser();
       if (user) {
         setUser(user.username);
+      } else {
+        setUser("");
       }
       return user
     }
     fetchUser();
-  }, []);
+  }, [path]);
 
   useEffect(() => {  
     const handleScroll = () => {
@@ -93,16 +101,45 @@ export default function Header() {
                     autoFocus
                   />
                 )}
+
                 <button type="button" onClick={() => setIsSearchVisible(!isSearchVisible)} className='text-black'>
                   <BsSearch size={20} />
                 </button>
               </form>
+              <Link href="/recommend">
+                <FaRegLightbulb className="text-2xl hover:text-yellow-400"/>
+              </Link>
               <DarkModeSwitch />
               <IoIosNotificationsOutline className="text-2xl"/>
-              <Link href="/profile">
-                  <RxAvatar className="text-2xl"/>
-              </Link>
-                </>
+              <div
+                className="relative"
+                onMouseEnter={() => setDropdownOpen(true)}
+                onMouseLeave={() => setDropdownOpen(false)}
+              >
+                  {/* Avatar */}
+                  <div className="cursor-pointer">
+                    <RxAvatar className="text-2xl" />
+                  </div>
+
+                  {/* Dropdown Menu */}
+                  {isDropdownOpen && (
+                    <div className="absolute right-0 w-24 bg-white border border-gray-200 rounded-md shadow-lg">
+                      <Link
+                        href="/profile"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        Profile
+                      </Link>
+                      <button
+                         onClick={handleLogout}
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
+              </div>
+              </>
             ):(
               <>
               <Link href="/login">
